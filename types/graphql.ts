@@ -1,7 +1,7 @@
 // GraphQL types will be defined here after backend schema is finalized
 // This file is a placeholder for future GraphQL type definitions
 
-export interface Member {
+export type Member = {
   id: string
   firebaseId: string
   customId?: string
@@ -10,7 +10,7 @@ export interface Member {
   email?: string
 }
 
-export interface AuthResponse {
+export type AuthResponse = {
   sessionToken: string
   expiresAt: string
   member: Member

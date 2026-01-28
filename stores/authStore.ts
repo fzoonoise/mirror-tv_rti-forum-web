@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 import type { Member } from '@/types/graphql'
 
-interface AuthState {
+type AuthState = {
   member: Member | null
   sessionToken: string | null
   isAuthenticated: boolean
