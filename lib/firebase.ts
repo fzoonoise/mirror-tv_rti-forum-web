@@ -1,8 +1,7 @@
-import { type FirebaseApp,initializeApp } from 'firebase/app'
-import { type Auth,getAuth } from 'firebase/auth'
+import { type FirebaseApp, initializeApp } from 'firebase/app'
+import { type Auth, getAuth } from 'firebase/auth'
 
 import { env } from './env'
-
 let firebaseApp: FirebaseApp | undefined
 let auth: Auth | undefined
 
