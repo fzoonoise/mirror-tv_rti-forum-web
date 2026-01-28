@@ -1,0 +1,39 @@
+{
+  "common": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "search": "Search",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "loading": "Loading..."
+  },
+  "nav": {
+    "home": "Home",
+    "forum": "Forum",
+    "profile": "Profile"
+  },
+  "post": {
+    "create": "Create Post",
+    "title": "Title",
+    "content": "Content",
+    "category": "Category",
+    "publish": "Publish",
+    "edit": "Edit Post",
+    "delete": "Delete Post",
+    "reply": "Reply",
+    "like": "Like",
+    "bookmark": "Bookmark",
+    "report": "Report"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "loginTitle": "Login",
+    "registerTitle": "Register",
+    "forgotPassword": "Forgot Password?"
+  }
+}

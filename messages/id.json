@@ -1,0 +1,39 @@
+{
+  "common": {
+    "login": "Masuk",
+    "logout": "Keluar",
+    "register": "Daftar",
+    "search": "Cari",
+    "submit": "Kirim",
+    "cancel": "Batal",
+    "save": "Simpan",
+    "edit": "Edit",
+    "delete": "Hapus",
+    "loading": "Memuat..."
+  },
+  "nav": {
+    "home": "Beranda",
+    "forum": "Forum",
+    "profile": "Profil"
+  },
+  "post": {
+    "create": "Buat Postingan",
+    "title": "Judul",
+    "content": "Konten",
+    "category": "Kategori",
+    "publish": "Terbitkan",
+    "edit": "Edit Postingan",
+    "delete": "Hapus Postingan",
+    "reply": "Balas",
+    "like": "Suka",
+    "bookmark": "Tandai",
+    "report": "Laporkan"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Kata Sandi",
+    "loginTitle": "Masuk",
+    "registerTitle": "Daftar",
+    "forgotPassword": "Lupa Kata Sandi?"
+  }
+}

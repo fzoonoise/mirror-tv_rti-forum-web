@@ -1,0 +1,39 @@
+{
+  "common": {
+    "login": "เข้าสู่ระบบ",
+    "logout": "ออกจากระบบ",
+    "register": "ลงทะเบียน",
+    "search": "ค้นหา",
+    "submit": "ส่ง",
+    "cancel": "ยกเลิก",
+    "save": "บันทึก",
+    "edit": "แก้ไข",
+    "delete": "ลบ",
+    "loading": "กำลังโหลด..."
+  },
+  "nav": {
+    "home": "หน้าแรก",
+    "forum": "ฟอรัม",
+    "profile": "โปรไฟล์"
+  },
+  "post": {
+    "create": "สร้างโพสต์",
+    "title": "หัวข้อ",
+    "content": "เนื้อหา",
+    "category": "หมวดหมู่",
+    "publish": "เผยแพร่",
+    "edit": "แก้ไขโพสต์",
+    "delete": "ลบโพสต์",
+    "reply": "ตอบกลับ",
+    "like": "ถูกใจ",
+    "bookmark": "บุ๊คมาร์ก",
+    "report": "รายงาน"
+  },
+  "auth": {
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "loginTitle": "เข้าสู่ระบบ",
+    "registerTitle": "ลงทะเบียน",
+    "forgotPassword": "ลืมรหัสผ่าน?"
+  }
+}
