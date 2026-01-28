@@ -7,11 +7,13 @@
 **專案定位**: 純前端 Next.js 專案，透過 GraphQL 與後端 Keystone 6 API 通訊。
 
 ### 環境需求
+
 - **Node.js**: v22.20.0 (Next.js 16 要求最低 20.9.0)
 - **TypeScript**: 5.1.0+
 - **套件管理器**: pnpm
 
 ### 後端整合
+
 - 後端使用 **Keystone 6** (基於 GraphQL)
 - 後端使用 **Apollo Server** 提供 GraphQL API
 - 認證採用 **Firebase Authentication**
@@ -22,36 +24,38 @@
 
 ## 核心技術棧
 
-| 類別 | 技術 | 說明 |
-|------|------|------|
-| 前端框架 | Next.js 16.1.5 | App Router、最低 Node.js 20.9.0、安全更新版 |
-| 套件管理器 | pnpm | 快速、節省磁碟空間的套件管理器 |
-| UI 框架 | Tailwind CSS v3.4 + shadcn/ui | 現代化元件庫 |
-| 程式碼格式化 | Prettier + prettier-plugin-tailwindcss | 自動排序 Tailwind classes |
-| Linting | ESLint + eslint-plugin-simple-import-sort | 自動排序 imports/exports |
-| 狀態管理 | Zustand | 輕量級狀態管理 |
-| GraphQL Client | Apollo Client | 連接 Keystone 6 API |
-| 表單驗證 | Zod + React Hook Form | 型別安全的表單驗證 |
-| 認證 | Firebase Auth | 前端 Firebase SDK + 後端 Session |
-| 多語系 | next-intl | Next.js App Router 原生支援 |
-| 內容編輯 | Markdown | react-md-editor + 工具列 |
-| 後端 | Keystone 6 + Apollo Server | 現有架構 |
-| 資料庫 | PostgreSQL | 透過 Keystone 6 管理 |
-| ORM | Keystone 6 (內建 Prisma) | 不需額外 ORM |
-| 內容翻譯 | Gemini API | 後端負責文章翻譯 |
-| UI 開發 | Storybook | 元件開發與展示 |
-| 部署平台 | Google Cloud Platform | 使用 Cloud Build 部署 |
-| 監控 | Google Cloud Logging | GCP 內建日誌系統 |
+| 類別           | 技術                                      | 說明                                        |
+| -------------- | ----------------------------------------- | ------------------------------------------- |
+| 前端框架       | Next.js 16.1.5                            | App Router、最低 Node.js 20.9.0、安全更新版 |
+| 套件管理器     | pnpm                                      | 快速、節省磁碟空間的套件管理器              |
+| UI 框架        | Tailwind CSS v3.4 + shadcn/ui             | 現代化元件庫                                |
+| 程式碼格式化   | Prettier + prettier-plugin-tailwindcss    | 自動排序 Tailwind classes                   |
+| Linting        | ESLint + eslint-plugin-simple-import-sort | 自動排序 imports/exports                    |
+| 狀態管理       | Zustand                                   | 輕量級狀態管理                              |
+| GraphQL Client | Apollo Client                             | 連接 Keystone 6 API                         |
+| 表單驗證       | Zod + React Hook Form                     | 型別安全的表單驗證                          |
+| 認證           | Firebase Auth                             | 前端 Firebase SDK + 後端 Session            |
+| 多語系         | next-intl                                 | Next.js App Router 原生支援                 |
+| 內容編輯       | Markdown                                  | react-md-editor + 工具列                    |
+| 後端           | Keystone 6 + Apollo Server                | 現有架構                                    |
+| 資料庫         | PostgreSQL                                | 透過 Keystone 6 管理                        |
+| ORM            | Keystone 6 (內建 Prisma)                  | 不需額外 ORM                                |
+| 內容翻譯       | Gemini API                                | 後端負責文章翻譯                            |
+| UI 開發        | Storybook                                 | 元件開發與展示                              |
+| 部署平台       | Google Cloud Platform                     | 使用 Cloud Build 部署                       |
+| 監控           | Google Cloud Logging                      | GCP 內建日誌系統                            |
 
 ---
 
 ## 認證與授權
 
 ### 雙軌權限系統
+
 - **Admin UI 登入**: Keystone User (後台管理)
 - **前端會員登入**: Member (透過 Firebase + GraphQL)
 
 ### Firebase 認證流程
+
 1. 前端使用 Firebase Client SDK 登入取得 `idToken`
 2. 呼叫後端 GraphQL mutation `authenticateMemberWithFirebase`
 3. 後端驗證 Firebase Token 並回傳 Session Token
@@ -59,10 +63,12 @@
 5. 後續請求帶 `Authorization: Bearer <sessionToken>` Header
 
 ### GraphQL 認證 API
+
 - **Mutation**: `authenticateMemberWithFirebase` - Firebase 登入
 - **Query**: `authenticatedMember` - 取得當前登入會員
 
 ### 登入方式
+
 - Email + Password (透過 Firebase)
 - 其他方式需確認 Firebase 專案配置
 
@@ -71,6 +77,7 @@
 ## 核心功能
 
 ### 基礎功能
+
 - 用戶註冊/登入
 - 用戶個人資料頁面
 - 發布主題文章
@@ -87,6 +94,7 @@
 - 搜尋功能
 
 ### 互動功能
+
 - 按讚/點贊
 - 收藏/書籤
 - 舉報/檢舉
@@ -96,6 +104,7 @@
   - 通知 CMS 管理者查看
 
 ### 內容功能
+
 - Markdown 支援
   - 粗體、斜體、刪除線
   - H2 標題
@@ -108,6 +117,7 @@
   - 可新增投票選項
 
 ### 管理功能 (CMS)
+
 - 管理員後台
 - 用戶管理
   - 隱藏特定用戶所有文章
@@ -124,12 +134,14 @@
   - comment 數
 
 ### 其他進階功能
+
 - SEO 優化
 - 多語言支援（五國語言）
   - UI 介面多語系：繁中、英文、印尼文、越南文、泰文
   - 文章內容翻譯（後端使用 Gemini API）
 
 ### 不實作功能 (Phase 1)
+
 - 關注用戶
 - 通知系統
 - 私訊功能
@@ -148,6 +160,7 @@
 **注意**: 資料模型由後端 Keystone 6 定義，此處僅列出前端需要的核心欄位概念，實際結構需與後端對齊。
 
 ### 核心實體
+
 - **Member**: 會員資料（Firebase 認證 + 個人資料）
 - **Post**: 文章（支援 Markdown、附件、投票）
 - **Reply**: 回覆/留言
@@ -162,11 +175,13 @@
 ## 檔案上傳與儲存
 
 ### 檔案規格
+
 - **單檔大小上限**: 5 MB
 - **允許檔案類型**: jpg, png
 - **壓縮策略**: 保持原檔
 
 ### 儲存方案 (待確認)
+
 待選擇：AWS S3、Cloudinary、Vercel Blob、Supabase Storage 或其他
 
 ---
@@ -175,18 +190,19 @@
 
 ### 快取策略 (分層架構)
 
-| 層級 | 方案 | 用途 | 說明 |
-|------|------|------|------|
-| L1 | Next.js 內建快取 | 頁面/組件級 | App Router 自動快取靜態內容 |
-| L2 | Apollo Client Cache | GraphQL 查詢 | 前端記憶體快取，減少重複請求 |
-| L3 | Redis | 熱門資料 | 快取熱門文章、分類列表等 (後端) |
-| L4 | CDN | 靜態資源 | 圖片、CSS、JS 等靜態檔案 |
+| 層級 | 方案                | 用途         | 說明                            |
+| ---- | ------------------- | ------------ | ------------------------------- |
+| L1   | Next.js 內建快取    | 頁面/組件級  | App Router 自動快取靜態內容     |
+| L2   | Apollo Client Cache | GraphQL 查詢 | 前端記憶體快取，減少重複請求    |
+| L3   | Redis               | 熱門資料     | 快取熱門文章、分類列表等 (後端) |
+| L4   | CDN                 | 靜態資源     | 圖片、CSS、JS 等靜態檔案        |
 
 **論壇特性**: 讀多寫少，快取效益高
 
 ### 快取策略說明
 
 #### L1: Next.js 內建快取
+
 - **用途**: 頁面和組件級別的快取
 - **機制**: App Router 自動快取靜態內容和 React Server Components
 - **適用場景**:
@@ -195,6 +211,7 @@
   - 使用 ISR 的文章列表
 
 #### L2: Apollo Client Cache
+
 - **用途**: GraphQL 查詢結果快取
 - **機制**: 前端記憶體快取，自動管理查詢結果
 - **適用場景**:
@@ -204,6 +221,7 @@
 - **優勢**: 減少重複的 GraphQL 請求，提升用戶體驗
 
 #### L3: Redis (後端)
+
 - **用途**: 伺服器端熱門資料快取
 - **機制**: 在 Keystone 6 後端整合 Redis
 - **適用場景**:
@@ -214,6 +232,7 @@
 - **部署**: 建議使用 GCP Memorystore for Redis
 
 #### L4: CDN
+
 - **用途**: 靜態資源分發
 - **機制**: 邊緣節點快取靜態檔案
 - **適用場景**:
@@ -223,7 +242,9 @@
 - **建議**: 使用 GCP Cloud CDN 或 Cloudflare
 
 ### 渲染策略
+
 採用混合策略：
+
 - **SSG**: 靜態頁面 (首頁、關於頁面)
 - **SSR**: 動態內容 (文章頁、個人資料)
 - **ISR**: 定期更新的內容 (分類列表、熱門文章)
@@ -234,18 +255,22 @@
 ## 部署與維運
 
 ### 部署平台
+
 - **平台**: Google Cloud Platform
 - **CI/CD**: Google Cloud Build
 - **配置檔**: `cloudbuild.yaml`
 
 ### Google Cloud Build 說明
+
 Cloud Build 是 GCP 的 CI/CD 服務：
+
 - 與 GCP 深度整合，可自動部署至 Cloud Run、GKE、App Engine 等
 - 使用 `cloudbuild.yaml` 定義建置與部署流程
 - 支援從 GitHub、GitLab 等代碼倉庫自動觸發
 - 提供免費額度 (每日前 120 分鐘免費)
 
 **基本 cloudbuild.yaml 範例**:
+
 ```yaml
 steps:
   # 安裝依賴
@@ -266,6 +291,7 @@ steps:
 ### 監控與日誌
 
 #### Google Cloud Logging
+
 - **說明**: GCP 內建的日誌管理系統
 - **功能**:
   - 自動收集應用日誌
@@ -276,7 +302,9 @@ steps:
 - **適用場景**: 初期開發和中小型應用
 
 #### 錯誤追蹤 (可選)
+
 初期使用 Cloud Logging 已足夠，後續流量增加可考慮：
+
 - **Sentry**: 專業的錯誤追蹤服務 (免費版每月 5000 錯誤)
 - **優勢**: 更豐富的錯誤上下文、Source Maps 支援、效能監控
 
@@ -285,23 +313,28 @@ steps:
 ## 開發規範
 
 ### 程式碼風格
+
 - **Linting**: ESLint + Prettier
 - **配置**: 使用 Next.js 推薦設定
 
 ### TypeScript
+
 - **模式**: Strict Mode
 - **版本**: 5.1.0+
 
 ### 測試策略
+
 初期不導入自動化測試，專注於功能開發
 
 ### UI 開發工具
+
 - **Storybook**
   - 用於展示和測試基本 UI 元件
   - 獨立於主應用的元件開發環境
   - 可用於設計系統文檔
 
 ### Git 工作流程
+
 - **策略**: GitHub Flow
 - **分支命名**: `feature/*`, `bugfix/*`, `hotfix/*`
 - **主要分支**: `main` (生產), `dev` (開發)
@@ -311,14 +344,17 @@ steps:
 ## 技術整合說明
 
 ### 套件管理器
+
 使用 **pnpm** 作為專案套件管理器
 
 **安裝 pnpm**:
+
 ```bash
 npm install -g pnpm
 ```
 
 **基本指令**:
+
 ```bash
 pnpm install              # 安裝依賴
 pnpm add <package>        # 新增依賴
@@ -328,6 +364,7 @@ pnpm run <script>         # 執行腳本
 ```
 
 ### 核心依賴套件
+
 ```json
 {
   "packageManager": "pnpm@9.15.2",
@@ -363,6 +400,7 @@ pnpm run <script>         # 執行腳本
 ### Zod 使用說明
 
 #### 為什麼使用 Zod
+
 - **表單驗證**: 與 React Hook Form + shadcn/ui Form 元件完美整合
 - **型別安全**: 自動生成 TypeScript 型別
 - **環境變數驗證**: 應用啟動時驗證環境變數格式
@@ -371,6 +409,7 @@ pnpm run <script>         # 執行腳本
 #### 使用範例
 
 **表單驗證**:
+
 ```typescript
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
@@ -393,6 +432,7 @@ function LoginForm() {
 ```
 
 **環境變數驗證**:
+
 ```typescript
 import { z } from 'zod'
 
@@ -418,6 +458,7 @@ export const env = envSchema.parse({
 使用 **prettier-plugin-tailwindcss** 自動排序 Tailwind classes。
 
 **配置 (.prettierrc)**:
+
 ```json
 {
   "semi": false,
@@ -431,6 +472,7 @@ export const env = envSchema.parse({
 ```
 
 **運作方式**:
+
 - 儲存時自動排序 Tailwind classes
 - 按照官方推薦的 class 順序排列
 - 範例: `className="text-white bg-blue-500 p-4"` → `className="bg-blue-500 p-4 text-white"`
@@ -440,6 +482,7 @@ export const env = envSchema.parse({
 使用 **eslint-plugin-simple-import-sort** 自動排序 imports 和 exports。
 
 **配置 (.eslintrc.json)**:
+
 ```json
 {
   "extends": ["next/core-web-vitals"],
@@ -452,6 +495,7 @@ export const env = envSchema.parse({
 ```
 
 **排序規則**（自動）:
+
 1. React 相關 imports (react, react-dom)
 2. Node.js 內建模組 (fs, path)
 3. 外部套件 (@apollo/client, firebase)
@@ -460,6 +504,7 @@ export const env = envSchema.parse({
 6. 樣式檔案 (.css, .scss)
 
 **範例**:
+
 ```typescript
 // 儲存前
 import { useState } from 'react'
@@ -510,6 +555,7 @@ import './styles.css'
 ```
 
 **搭配 VSCode 擴充套件**:
+
 - Prettier - Code formatter (esbenp.prettier-vscode)
 - ESLint (dbaeumer.vscode-eslint)
 - Tailwind CSS IntelliSense (bradlc.vscode-tailwindcss)
@@ -523,6 +569,7 @@ import './styles.css'
 5. **VSCode**: 儲存時自動執行 Prettier 和 ESLint
 
 **執行順序**:
+
 ```
 儲存檔案
 → Prettier 格式化（含 Tailwind class 排序）
@@ -531,6 +578,7 @@ import './styles.css'
 ```
 
 **不會衝突的原因**:
+
 - Prettier 處理格式（空格、換行）
 - ESLint 處理結構（import 順序、程式邏輯）
 - Tailwind CSS v3 與這些工具完全相容
@@ -542,6 +590,7 @@ import './styles.css'
 #### 為什麼選擇 next-intl 而非 i18next
 
 **next-intl 優勢**:
+
 - ✅ 專為 Next.js App Router 設計
 - ✅ 原生支援 React Server Components
 - ✅ 類型安全更好（自動 TypeScript 推斷）
@@ -550,6 +599,7 @@ import './styles.css'
 - ✅ 支援 Server Actions
 
 **i18next 劣勢**:
+
 - ❌ 為通用 React 設計，非 Next.js 專用
 - ❌ App Router 整合需要額外配置
 - ❌ 類型安全需手動定義
@@ -558,12 +608,14 @@ import './styles.css'
 #### 架構設計
 
 **雙層翻譯系統**:
+
 1. **UI 介面翻譯** (next-intl): 按鈕、標籤、提示訊息
 2. **內容翻譯** (Gemini API): 用戶發布的文章、回覆
 
 #### next-intl 配置範例
 
 **1. 設定語言檔**
+
 ```typescript
 // messages/zh-TW.json
 {
@@ -592,16 +644,18 @@ import './styles.css'
 ```
 
 **2. 配置 next-intl**
+
 ```typescript
 // i18n.ts
-import {getRequestConfig} from 'next-intl/server'
+import { getRequestConfig } from 'next-intl/server'
 
-export default getRequestConfig(async ({locale}) => ({
-  messages: (await import(`./messages/${locale}.json`)).default
+export default getRequestConfig(async ({ locale }) => ({
+  messages: (await import(`./messages/${locale}.json`)).default,
 }))
 ```
 
 **3. 使用翻譯**
+
 ```typescript
 // Client Component
 import {useTranslations} from 'next-intl'
@@ -622,6 +676,7 @@ async function Page() {
 
 **4. 支援語言**
 支援五國語言：
+
 - 繁體中文 (zh-TW)
 - 英文 (en)
 - 印尼文 (id)
@@ -631,6 +686,7 @@ async function Page() {
 #### 內容翻譯 (Gemini API)
 
 **流程**:
+
 1. 用戶發布文章（原始語言）
 2. 後端偵測原始語言
 3. 後端呼叫 Gemini API 翻譯成其他三種語言
@@ -638,6 +694,7 @@ async function Page() {
 5. 前端根據用戶語言偏好顯示對應翻譯
 
 **GraphQL Schema 建議** (待後端確認):
+
 ```graphql
 type Post {
   id: ID!
@@ -654,6 +711,7 @@ type PostTranslation {
 ```
 
 **前端查詢範例**:
+
 ```typescript
 const GET_POST = gql`
   query GetPost($id: ID!, $language: String!) {
@@ -677,6 +735,7 @@ const GET_POST = gql`
 #### 選擇方案: react-md-editor
 
 **特點**:
+
 - Markdown 語法 + 視覺化工具列
 - 支援即時預覽
 - 支援程式碼高亮
@@ -685,6 +744,7 @@ const GET_POST = gql`
 #### 實作範例
 
 **編輯器組件**:
+
 ```typescript
 import MDEditor from '@uiw/react-md-editor'
 
@@ -703,6 +763,7 @@ function PostEditor() {
 ```
 
 **顯示 Markdown 內容**:
+
 ```typescript
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -734,6 +795,7 @@ function PostContent({ content }: { content: string }) {
 ```
 
 **支援的 Markdown 功能**:
+
 - 粗體: `**text**`
 - 斜體: `*text*`
 - 刪除線: `~~text~~`
@@ -747,12 +809,15 @@ function PostContent({ content }: { content: string }) {
 待與檔案上傳方案確定後實作，將上傳後的 URL 插入 Markdown。
 
 ### Apollo Client 配置
+
 ```typescript
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 
 const httpLink = createHttpLink({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || 'http://localhost:3000/api/graphql',
+  uri:
+    process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT ||
+    'http://localhost:3000/api/graphql',
 })
 
 const authLink = setContext((_, { headers }) => {
@@ -761,7 +826,7 @@ const authLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : '',
-    }
+    },
   }
 })
 
@@ -812,6 +877,7 @@ NEXT_PUBLIC_DEFAULT_LOCALE=zh-TW
 ```
 
 **.gitignore 設定**:
+
 - node_modules
 
 ```
@@ -831,6 +897,7 @@ CLAUDE.md
 ```
 
 **後端 (參考 forum-cms README.md)**
+
 ```bash
 # Firebase Authentication
 FIREBASE_PROJECT_ID=
@@ -851,6 +918,7 @@ SUPPORTED_LANGUAGES=zh-TW,en,id,vi,th
 ```
 
 ### 專案架構
+
 ```
 rti-forum/
 ├── app/                        # Next.js App Router
@@ -917,17 +985,20 @@ rti-forum/
 ## 待確認事項
 
 ### 高優先級（需與後端對齊）
+
 1. **GraphQL Schema 確認** - 與後端對齊資料模型（Member、Post、Category、Vote、Report 等）
 2. **圖片/影片儲存方案** - 選擇 AWS S3、Cloudinary、GCS 或其他服務
 3. **內容翻譯 API 整合** - 確認 Gemini API 呼叫方式與 GraphQL 查詢結構（繁中、英、印尼、越南、泰文）
 
 ### 中優先級
+
 5. **分類結構** - 確認論壇 1-30 個分類的命名與層級
 6. **權限角色細節** - 確認 Admin、Moderator、User 的具體權限範圍
 7. **檢舉機制** - 確認檢舉流程與 CMS 通知方式
 8. **投票功能規格** - 確認投票選項數量、修改規則等
 
 ### 低優先級
+
 9. **Redis 部署** - 確認使用 GCP Memorystore 或其他 Redis 服務
 10. **CDN 服務** - 確認使用 GCP CDN 或 Cloudflare
 11. **備份策略** - 制定資料庫備份計劃
@@ -938,6 +1009,7 @@ rti-forum/
 ## 下一步行動
 
 ### Phase 1: 專案初始化
+
 1. ✅ 完成技術規劃文件
 2. ⏳ 使用 pnpm 建立 Next.js 16.1.5 專案
    - `pnpm create next-app@latest`
@@ -961,6 +1033,7 @@ rti-forum/
 9. ⏳ 整合 Storybook
 
 ### Phase 2: 核心整合
+
 10. ⏳ 建立 Apollo Client 連接
     - 建立 `lib/apollo.ts`
     - 配置認證 Header
@@ -978,6 +1051,7 @@ rti-forum/
     - 建立 Storybook stories
 
 ### Phase 3: 功能開發（待後端 Schema 確認後）
+
 15. ⏳ 實作用戶註冊/登入頁面
     - `app/[locale]/(auth)/login/page.tsx`
     - `app/[locale]/(auth)/register/page.tsx`
@@ -999,6 +1073,7 @@ rti-forum/
     - 檢舉/舉報
 
 ### 待確認後進行
+
 - 圖片/影片上傳整合
 - Gemini 翻譯內容顯示
 - SEO 優化
@@ -1014,12 +1089,14 @@ rti-forum/
 **規劃完成日期**: 2026-01-27
 
 **專案架構說明**:
+
 - 純前端 Next.js 16.1.5 專案
 - 不使用 `src/` 目錄層級
 - 環境變數使用 `.env` 檔案（非 `.env.local`）
 - 使用 pnpm 作為套件管理器
 
 **備註**:
+
 - 資料模型待與後端 Keystone 6 GraphQL Schema 對齊
 - 圖片儲存方案待確認（AWS S3、Cloudinary 等）
 - 支援五國語言：繁中、英、印尼、越南、泰文
