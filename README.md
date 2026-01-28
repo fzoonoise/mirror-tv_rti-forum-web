@@ -63,6 +63,7 @@ rti-forum/
 ## Features
 
 ### Implemented
+
 - ✅ Multi-language support (5 languages)
 - ✅ Modern UI with shadcn/ui components
 - ✅ Auto-sort imports on save (ESLint)
@@ -73,6 +74,7 @@ rti-forum/
 - ✅ Component development with Storybook
 
 ### In Development
+
 - 🚧 User authentication (login/register)
 - 🚧 Post creation and management
 - 🚧 Comments and replies

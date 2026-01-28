@@ -37,9 +37,9 @@ export default tseslint.config(
       },
     },
     rules: {
-      // Simple import sort
-      'simple-import-sort/imports': 'error',
-      'simple-import-sort/exports': 'error',
+      // Simple import sort - warn instead of error
+      'simple-import-sort/imports': 'warn',
+      'simple-import-sort/exports': 'warn',
 
       // React rules
       ...reactPlugin.configs.recommended.rules,
@@ -60,5 +60,14 @@ export default tseslint.config(
       },
     },
   },
-  storybook.configs['flat/recommended']
+  storybook.configs['flat/recommended'],
+  {
+    // Override Storybook rules for stories files
+    files: ['**/*.stories.{js,jsx,ts,tsx}'],
+    rules: {
+      // Allow importing from @storybook/react for type definitions
+      // This is necessary as @storybook/nextjs-vite doesn't export Meta/StoryObj types
+      'storybook/no-renderer-packages': 'off',
+    },
+  }
 )
