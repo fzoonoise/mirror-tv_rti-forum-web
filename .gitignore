@@ -47,3 +47,6 @@ next-env.d.ts
 GEMINI.md
 .claude/
 CLAUDE.md
+
+*storybook.log
+storybook-static
