@@ -1,5 +1,5 @@
-import { initializeApp, type FirebaseApp } from 'firebase/app'
-import { getAuth, type Auth } from 'firebase/auth'
+import { type FirebaseApp,initializeApp } from 'firebase/app'
+import { type Auth,getAuth } from 'firebase/auth'
 
 import { env } from './env'
 
