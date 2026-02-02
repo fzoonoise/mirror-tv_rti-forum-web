@@ -120,8 +120,6 @@ NEXT_PUBLIC_DEFAULT_LOCALE=zh-TW
 
 ## Documentation
 
-- [Technical Planning](./FORUM_PLANNING.md) - Full technical specification
-- [Backend API](./forum-cms-README.md) - Backend GraphQL API documentation
 - [Storybook Stories](./stories/README.md) - UI component stories
 
 ## License
