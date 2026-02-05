@@ -1,11 +1,13 @@
 import { z } from 'zod'
 
 const envSchema = z.object({
-  // GraphQL API Endpoint (Required for Apollo Client)
-  NEXT_PUBLIC_GRAPHQL_ENDPOINT: z
-    .string()
-    .url({ message: 'Must be a valid URL' }),
-    // .default('http://localhost:3000/api/graphql'),
+  // Server-side GraphQL endpoint — used by Proxy API Route and Server Actions.
+  // Not prefixed with NEXT_PUBLIC_ so it is unavailable on the client bundle;
+  // the schema marks it optional for that reason. Server code must assert at runtime.
+  GRAPHQL_ENDPOINT: z.string().url().optional(),
+
+  // Deprecated: Apollo Client now routes through /api/graphql proxy.
+  NEXT_PUBLIC_GRAPHQL_ENDPOINT: z.string().url().optional(),
 
   // Firebase Configuration (Required for Firebase Client SDK)
   NEXT_PUBLIC_FIREBASE_API_KEY: z.string().min(1).optional(),
@@ -20,6 +22,7 @@ const envSchema = z.object({
 })
 
 export const env = envSchema.parse({
+  GRAPHQL_ENDPOINT: process.env.GRAPHQL_ENDPOINT,
   NEXT_PUBLIC_GRAPHQL_ENDPOINT: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
   NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN:
