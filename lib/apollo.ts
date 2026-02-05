@@ -1,26 +1,11 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client'
-import { setContext } from '@apollo/client/link/context'
 
-import { env } from './env'
-
+// Auth is handled server-side by the Proxy API Route — no token logic needed here.
 const httpLink = createHttpLink({
-  uri: env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
-})
-
-const authLink = setContext((_, { headers }) => {
-  // Get token from localStorage (client-side only)
-  const token =
-    typeof window !== 'undefined' ? localStorage.getItem('sessionToken') : null
-
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    },
-  }
+  uri: '/api/graphql',
 })
 
 export const apolloClient = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: httpLink,
   cache: new InMemoryCache(),
 })
