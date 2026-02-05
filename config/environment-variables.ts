@@ -1,7 +1,10 @@
-// Build-time env vars (NEXT_PUBLIC_ prefix) — values are inlined by the bundler.
-// Server-side-only vars (e.g. GRAPHQL_ENDPOINT) are read directly at the call site.
+// Build-time env vars — values are inlined by the bundler.
+// Server-side-only vars (no NEXT_PUBLIC_ prefix) will be undefined on the client bundle.
 
 const ENV = process.env.NEXT_PUBLIC_ENV || 'local'
+
+// GraphQL — server-side only, undefined on the client
+const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT
 
 // Firebase — set per deployment via .env
 const FIREBASE_API_KEY = process.env.NEXT_PUBLIC_FIREBASE_API_KEY
@@ -25,4 +28,5 @@ export {
   FIREBASE_MESSAGING_SENDER_ID,
   FIREBASE_PROJECT_ID,
   FIREBASE_STORAGE_BUCKET,
+  GRAPHQL_ENDPOINT,
 }

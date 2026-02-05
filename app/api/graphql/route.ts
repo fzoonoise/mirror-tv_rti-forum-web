@@ -1,11 +1,11 @@
 import { cookies } from 'next/headers'
 import { type NextRequest, NextResponse } from 'next/server'
 
+import { GRAPHQL_ENDPOINT } from '@/config/environment-variables'
 import { SESSION_COOKIE_NAME } from '@/constants'
 
 export async function POST(req: NextRequest) {
-  const endpoint = process.env.GRAPHQL_ENDPOINT
-  if (!endpoint) {
+  if (!GRAPHQL_ENDPOINT) {
     return new NextResponse('GRAPHQL_ENDPOINT is not configured', {
       status: 500,
     })
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   const cookieStore = await cookies()
   const session = cookieStore.get(SESSION_COOKIE_NAME)
 
-  const response = await fetch(endpoint, {
+  const response = await fetch(GRAPHQL_ENDPOINT, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
