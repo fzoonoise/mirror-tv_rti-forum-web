@@ -145,4 +145,4 @@ NEXT_PUBLIC_DEFAULT_LOCALE=zh-TW
 
 ## License
 
-Private - All rights reserved
+Distributed under the MIT License. See `LICENSE` for more information.
