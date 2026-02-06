@@ -8,10 +8,10 @@ A modern forum web application built with Next.js 16, supporting multi-language 
 - **Language**: TypeScript 5.1+
 - **Styling**: Tailwind CSS v3.4 + shadcn/ui
 - **State Management**: Zustand
-- **API**: Apollo Client + GraphQL
-- **Authentication**: Firebase Auth
+- **API**: Apollo Client + GraphQL (via server-side proxy)
+- **Authentication**: Firebase Auth + HttpOnly cookie session
 - **Forms**: React Hook Form + Zod
-- **i18n**: next-intl (5 languages: 繁中, English, Indonesian, Vietnamese, Thai)
+- **i18n**: next-intl (5 languages: zh-TW, en, id, vi, th)
 - **Package Manager**: pnpm 10.17.1
 
 ## Getting Started
@@ -24,16 +24,17 @@ A modern forum web application built with Next.js 16, supporting multi-language 
 ### Installation
 
 ```bash
-# Install dependencies
 pnpm install
-
-# Run development server
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the application.
+### Environment Setup
 
-### Available Scripts
+```bash
+cp .env.example .env
+# Fill in GRAPHQL_ENDPOINT and Firebase credentials
+```
+
+### Development
 
 ```bash
 pnpm dev          # Start development server with Turbopack
@@ -42,85 +43,105 @@ pnpm start        # Start production server
 pnpm lint         # Run ESLint
 pnpm lint:fix     # Fix ESLint issues
 pnpm format       # Format code with Prettier
-pnpm storybook    # Start Storybook UI component viewer
+pnpm storybook    # Start Storybook (http://localhost:6006)
 ```
+
+Open [http://localhost:3000](http://localhost:3000) to see the application.
 
 ## Project Structure
 
 ```
-rti-forum/
-├── app/[locale]/          # Next.js App Router with i18n
-├── components/ui/         # shadcn/ui components
-├── lib/                   # Utility functions & configs
-├── hooks/                 # Custom React hooks
-├── stores/                # Zustand state stores
-├── types/                 # TypeScript type definitions
-├── graphql/               # GraphQL queries & mutations
-├── messages/              # i18n translation files
-└── stories/               # Storybook component stories
+forum-web/
+├── actions/                 # Server Actions (auth login/logout)
+├── app/
+│   ├── [locale]/            # i18n routing
+│   │   ├── (auth)/login/    # Login page
+│   │   ├── (forum)/         # Forum pages (planned)
+│   │   └── layout.tsx
+│   └── api/graphql/         # GraphQL proxy (reads cookie, attaches auth header)
+├── components/
+│   ├── layout/              # LanguageSwitcher, etc.
+│   └── ui/                  # shadcn/ui components
+├── config/                  # Environment variables (Zod validated)
+├── constants/               # App constants (session config, etc.)
+├── graphql/                 # Queries, mutations, fragments
+├── hooks/                   # useAuth, etc.
+├── lib/                     # Apollo Client, Firebase SDK, utilities
+├── messages/                # i18n JSON files (zh-TW, en, id, vi, th)
+├── stores/                  # Zustand stores (auth state)
+├── stories/                 # Storybook stories
+└── types/                   # TypeScript type definitions
 ```
+
+## Architecture
+
+### Authentication Flow
+
+```
+Browser                     Next.js Server               Keystone Backend
+  |                               |                            |
+  | 1. Firebase login             |                            |
+  |    (email + password)         |                            |
+  |                               |                            |
+  | 2. Server Action (idToken) -->| 3. GraphQL mutation ------>|
+  |                               |<---- sessionToken + member |
+  |<-- HttpOnly cookie + member   |                            |
+  |                               |                            |
+  | 4. Apollo query via           |                            |
+  |    /api/graphql ------------->| 5. Attach auth header ---->|
+  |                               |<---- GraphQL response -----|
+  |<-- proxied response           |                            |
+```
+
+- Session token is stored exclusively in an **HttpOnly cookie** (not accessible via JavaScript)
+- All client-side GraphQL requests go through `/api/graphql` proxy which attaches the `Authorization` header
+- `useAuth` hook handles login, logout, and session restoration on page refresh
 
 ## Features
 
 ### Implemented
 
-- ✅ Multi-language support (5 languages)
-- ✅ Modern UI with shadcn/ui components
-- ✅ Auto-sort imports on save (ESLint)
-- ✅ Auto-format code on save (Prettier)
-- ✅ GraphQL API integration ready
-- ✅ Firebase authentication setup
-- ✅ Form validation with Zod
-- ✅ Component development with Storybook
+- Firebase authentication with HttpOnly cookie session
+- Login page with form validation (shadcn/ui + react-hook-form + zod)
+- GraphQL proxy with automatic auth header injection
+- Session restoration on page refresh
+- Multi-language support (5 languages)
+- Middleware with i18n + protected route framework
+- UI component library (shadcn/ui) with Storybook
 
 ### In Development
 
-- 🚧 User authentication (login/register)
-- 🚧 Post creation and management
-- 🚧 Comments and replies
-- 🚧 User profiles
-- 🚧 Category browsing
-- 🚧 Search functionality
-
-## Development Tools
-
-### Storybook
-
-View and develop UI components in isolation:
-
-```bash
-pnpm storybook
-```
-
-Visit [http://localhost:6006](http://localhost:6006) to see component stories.
-
-### Code Quality
-
-- **ESLint**: Flat config with Next.js, React, and TypeScript rules
-- **Prettier**: Auto-format with Tailwind class sorting
-- **TypeScript**: Strict mode enabled
+- User registration page
+- Post creation and management
+- Comments and replies
+- User profiles
+- Category browsing
+- Search functionality
 
 ## Environment Variables
 
 Copy `.env.example` to `.env` and fill in your credentials:
 
 ```bash
-# GraphQL API
-NEXT_PUBLIC_GRAPHQL_ENDPOINT=http://localhost:3000/api/graphql
+# Server-side only
+GRAPHQL_ENDPOINT=https://your-cms-host/api/graphql
 
-# Firebase Authentication
+# Client-side
+NEXT_PUBLIC_ENV=dev
 NEXT_PUBLIC_FIREBASE_API_KEY=
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=
-# ... other Firebase config
-
-# Default locale
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
 NEXT_PUBLIC_DEFAULT_LOCALE=zh-TW
 ```
 
-## Documentation
+## Code Quality
 
-- [Storybook Stories](./stories/README.md) - UI component stories
+- **ESLint 9**: Flat config with import sorting (`eslint-plugin-simple-import-sort`)
+- **Prettier**: Auto-format with Tailwind class sorting (`prettier-plugin-tailwindcss`)
+- **TypeScript**: Strict mode, use `type` over `interface`, enforce `import type`
 
 ## License
 
