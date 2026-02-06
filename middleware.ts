@@ -24,7 +24,7 @@ export default function middleware(req: NextRequest) {
   const protectedPaths: string[] = [] // e.g., ['/profile', '/posts/create']
   const pathnameWithoutLocale = pathname.replace(/^\/[a-z]{2}(-[A-Z]{2})?/, '')
   const isProtectedPath = protectedPaths.some((path) =>
-    pathnameWithoutLocale.startsWith(path),
+    pathnameWithoutLocale.startsWith(path)
   )
 
   if (isProtectedPath) {

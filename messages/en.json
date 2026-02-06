@@ -33,7 +33,13 @@
     "email": "Email",
     "password": "Password",
     "loginTitle": "Login",
+    "loginDescription": "Enter your email and password to login",
     "registerTitle": "Register",
-    "forgotPassword": "Forgot Password?"
+    "forgotPassword": "Forgot Password?",
+    "validationEmail": "Invalid email address",
+    "validationPasswordMin": "Password must be at least 8 characters",
+    "validationPasswordUppercase": "Password must contain at least one uppercase letter",
+    "validationPasswordLowercase": "Password must contain at least one lowercase letter",
+    "validationPasswordSpecial": "Password must contain at least one special character"
   }
 }

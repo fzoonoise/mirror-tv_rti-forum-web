@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 
+import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
 import type { Locale } from '@/i18n'
 import { locales } from '@/i18n'
 
@@ -31,6 +32,12 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
+          <header className="border-b">
+            <div className="container mx-auto flex h-16 items-center justify-between px-4">
+              <h1 className="text-xl font-bold">RTI Forum</h1>
+              <LanguageSwitcher />
+            </div>
+          </header>
           {children}
         </NextIntlClientProvider>
       </body>
