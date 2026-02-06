@@ -1,5 +1,5 @@
-import createMiddleware from 'next-intl/middleware'
 import { type NextRequest, NextResponse } from 'next/server'
+import createMiddleware from 'next-intl/middleware'
 
 import { SESSION_COOKIE_NAME } from '@/constants'
 
@@ -11,29 +11,33 @@ const intlMiddleware = createMiddleware({
   localePrefix: 'as-needed',
 })
 
-// Routes that require an active session cookie.
-// Add paths as needed — the check uses `startsWith` against the
-// locale-prefixed pathname (e.g. "/zh-TW/posts/new").
-const PROTECTED_ROUTES: string[] = []
+export default function middleware(req: NextRequest) {
+  // 1. Run i18n middleware first
+  const intlResponse = intlMiddleware(req)
 
-export default async function middleware(req: NextRequest) {
-  const response = await intlMiddleware(req)
-
+  // 2. Extract locale from pathname for locale-aware redirects
   const pathname = req.nextUrl.pathname
-  const session = req.cookies.get(SESSION_COOKIE_NAME)
+  const localeMatch = pathname.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)/)
+  const locale = localeMatch ? localeMatch[1] : defaultLocale
 
-  const isProtected = PROTECTED_ROUTES.some((route) =>
-    pathname.startsWith(route),
+  // 3. Check protected routes (framework only — extend as needed)
+  const protectedPaths: string[] = [] // e.g., ['/profile', '/posts/create']
+  const pathnameWithoutLocale = pathname.replace(/^\/[a-z]{2}(-[A-Z]{2})?/, '')
+  const isProtectedPath = protectedPaths.some((path) =>
+    pathnameWithoutLocale.startsWith(path),
   )
 
-  if (isProtected && !session) {
-    // Preserve the locale segment already present in the URL.
-    const localeMatch = locales.find((l) => pathname.startsWith(`/${l}`))
-    const prefix = localeMatch ? `/${localeMatch}` : ''
-    return NextResponse.redirect(new URL(`${prefix}/login`, req.url))
+  if (isProtectedPath) {
+    const session = req.cookies.get(SESSION_COOKIE_NAME)
+    if (!session) {
+      // Redirect to login, preserving locale and original path
+      const loginUrl = new URL(`/${locale}/login`, req.url)
+      loginUrl.searchParams.set('from', pathname)
+      return NextResponse.redirect(loginUrl)
+    }
   }
 
-  return response
+  return intlResponse
 }
 
 export const config = {
