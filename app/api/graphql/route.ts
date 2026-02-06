@@ -20,6 +20,26 @@ export async function POST(req: NextRequest) {
       body: await req.text(),
     })
 
+    // Verify the backend returned JSON, not HTML error page
+    const contentType = response.headers.get('content-type')
+    if (!contentType?.includes('application/json')) {
+      const text = await response.text()
+      console.error(
+        `Backend returned non-JSON response (${contentType}):`,
+        text.slice(0, 200)
+      )
+      return NextResponse.json(
+        {
+          errors: [
+            {
+              message: `Backend error: expected JSON but got ${contentType || 'unknown content-type'}`,
+            },
+          ],
+        },
+        { status: 502 }
+      )
+    }
+
     return new NextResponse(response.body, {
       status: response.status,
       headers: { 'Content-Type': 'application/json' },
@@ -27,6 +47,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     const message =
       error instanceof Error ? error.message : 'Internal server error'
+    console.error('GraphQL proxy error:', error)
     return NextResponse.json({ errors: [{ message }] }, { status: 503 })
   }
 }
