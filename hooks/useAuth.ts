@@ -16,7 +16,6 @@ export function useAuth() {
 
   // Restore auth state after page refresh — if a valid session cookie exists
   // the proxy will forward it and the backend returns the current member.
-  // Reads store imperatively via getState() so the effect only runs once on mount.
   useEffect(() => {
     const { member: current, setAuth } = useAuthStore.getState()
     if (current) return
@@ -30,8 +29,8 @@ export function useAuth() {
           setAuth(data.authenticatedMember)
         }
       })
-      .catch(() => {
-        // No valid session — nothing to restore
+      .catch((error) => {
+        console.error('Failed to restore auth session:', error)
       })
   }, [])
 

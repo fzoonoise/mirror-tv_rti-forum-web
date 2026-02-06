@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { Spinner } from '@/components/ui/spinner'
 import { useAuth } from '@/hooks/useAuth'
 
 export default function LoginPage() {
@@ -31,8 +32,16 @@ export default function LoginPage() {
   const tCommon = useTranslations('common')
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { login } = useAuth()
+  const { login, isAuthenticated } = useAuth()
   const [error, setError] = useState<string | null>(null)
+
+  // If session restoration discovers user is already logged in, redirect away
+  useEffect(() => {
+    if (isAuthenticated) {
+      const from = searchParams.get('from') || '/'
+      router.push(from)
+    }
+  }, [isAuthenticated, router, searchParams])
 
   const loginSchema = useMemo(
     () =>
@@ -61,12 +70,13 @@ export default function LoginPage() {
     },
   })
 
+  const isSubmitting = form.formState.isSubmitting
+
   const onSubmit = async (data: LoginForm) => {
     try {
       setError(null)
       await login(data.email, data.password)
 
-      // Redirect to the page user came from, or home
       const from = searchParams.get('from') || '/'
       router.push(from)
     } catch (err) {
@@ -126,11 +136,10 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 className="w-full"
-                disabled={form.formState.isSubmitting}
+                disabled={isSubmitting}
               >
-                {form.formState.isSubmitting
-                  ? tCommon('loading')
-                  : tCommon('login')}
+                {isSubmitting ? tCommon('loading') : tCommon('login')}
+                {isSubmitting && <Spinner className="mr-2 size-4" />}
               </Button>
             </form>
           </Form>
