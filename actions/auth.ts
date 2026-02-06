@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers'
 
-import { GRAPHQL_ENDPOINT } from '@/config/environment-variables'
+import { getServerEnv } from '@/config/environment-variables'
 import { SESSION_COOKIE_NAME, SESSION_MAX_AGE } from '@/constants'
 import type { Member } from '@/types/graphql'
 
@@ -29,9 +29,7 @@ const AUTHENTICATE_MUTATION = `
 `
 
 export async function loginWithFirebase(idToken: string): Promise<Member> {
-  if (!GRAPHQL_ENDPOINT) {
-    throw new Error('GRAPHQL_ENDPOINT is not configured')
-  }
+  const { GRAPHQL_ENDPOINT } = getServerEnv()
 
   const response = await fetch(GRAPHQL_ENDPOINT, {
     method: 'POST',
