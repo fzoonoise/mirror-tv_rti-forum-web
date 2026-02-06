@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers'
 
-import { getServerEnv } from '@/config/environment-variables'
+import { ENV, getServerEnv } from '@/config/environment-variables'
 import { SESSION_COOKIE_NAME, SESSION_MAX_AGE } from '@/constants'
 import type { Member } from '@/types/graphql'
 
@@ -50,20 +50,31 @@ export async function loginWithFirebase(idToken: string): Promise<Member> {
     throw new Error(json.errors[0]?.message ?? 'Authentication failed')
   }
 
-  const { sessionToken, member } =
+  const { sessionToken, expiresAt, member } =
     json.data?.authenticateMemberWithFirebase ?? {}
 
   if (!sessionToken || !member) {
     throw new Error('Invalid response from authentication endpoint')
   }
 
+  // Derive maxAge from backend expiresAt when available, fallback to default
+  let maxAge = SESSION_MAX_AGE
+  if (expiresAt) {
+    const expiresAtMs = new Date(expiresAt).getTime()
+    const remainingSeconds = Math.floor((expiresAtMs - Date.now()) / 1000)
+    if (remainingSeconds <= 0) {
+      throw new Error('Session token already expired')
+    }
+    maxAge = remainingSeconds
+  }
+
   const cookieStore = await cookies()
   cookieStore.set(SESSION_COOKIE_NAME, sessionToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: ['staging', 'prod'].includes(ENV),
     sameSite: 'lax',
     path: '/',
-    maxAge: SESSION_MAX_AGE,
+    maxAge,
   })
 
   return member as Member

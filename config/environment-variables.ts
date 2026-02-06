@@ -3,7 +3,12 @@ import { z } from 'zod'
 // Build-time env vars — values are inlined by the bundler.
 // Server-side-only vars (no NEXT_PUBLIC_ prefix) will be undefined on the client bundle.
 
-const ENV = process.env.NEXT_PUBLIC_ENV || 'local'
+const envSchema = z.enum(['local', 'dev', 'staging', 'prod'])
+export type ValidEnv = z.infer<typeof envSchema>
+
+// Fail fast: strict validation ensures we don't accidentally run as 'local' in production
+// due to a typo (e.g., 'production' instead of 'prod').
+const ENV = envSchema.parse(process.env.NEXT_PUBLIC_ENV ?? 'local')
 
 // Firebase — set per deployment via .env
 const FIREBASE_API_KEY = process.env.NEXT_PUBLIC_FIREBASE_API_KEY
@@ -16,7 +21,7 @@ const FIREBASE_MESSAGING_SENDER_ID =
 const FIREBASE_APP_ID = process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 
 // Internationalization
-const DEFAULT_LOCALE = process.env.NEXT_PUBLIC_DEFAULT_LOCALE || 'zh-TW'
+const DEFAULT_LOCALE = process.env.NEXT_PUBLIC_DEFAULT_LOCALE ?? 'zh-TW'
 
 // Server-side env — Zod validated on first access.
 // Only call getServerEnv() from server-side code (Server Actions, Route Handlers).

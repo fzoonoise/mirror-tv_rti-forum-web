@@ -1,4 +1,4 @@
 const SESSION_COOKIE_NAME = 'session'
-const SESSION_MAX_AGE = 60 * 60 * 24
+const SESSION_MAX_AGE = 60 * 60 * 24 * 7
 
 export { SESSION_COOKIE_NAME, SESSION_MAX_AGE }
