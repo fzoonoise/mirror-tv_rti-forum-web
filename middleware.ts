@@ -8,7 +8,8 @@ import { defaultLocale, locales } from './i18n'
 const intlMiddleware = createMiddleware({
   locales,
   defaultLocale,
-  localePrefix: 'as-needed',
+  localePrefix: 'always', // All locales show prefix in URL (e.g., /zh-TW, /en)
+  localeDetection: true, // Auto-detect browser language for root path
 })
 
 export default function middleware(req: NextRequest) {
