@@ -6,6 +6,7 @@ import { getMessages } from 'next-intl/server'
 
 import { AuthButton } from '@/components/layout/AuthButton'
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
+import { Toaster } from '@/components/ui/sonner'
 import type { Locale } from '@/i18n'
 import { locales } from '@/i18n'
 
@@ -43,6 +44,7 @@ export default async function LocaleLayout({
             </div>
           </header>
           {children}
+          <Toaster />
         </NextIntlClientProvider>
       </body>
     </html>
