@@ -107,7 +107,7 @@ Browser                     Next.js Server               Keystone Backend
 - Session restoration on page refresh
 - Multi-language support (5 languages)
 - Middleware with i18n + protected route framework
-- UI component library (shadcn/ui) with Storybook
+- Comprehensive UI component library (17 shadcn/ui components) with Storybook
 
 ### In Development
 
