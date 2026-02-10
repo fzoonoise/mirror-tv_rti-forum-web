@@ -13,26 +13,33 @@ import type { Member } from '@/types/graphql'
 export function useAuth() {
   const member = useAuthStore((state) => state.member)
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  const isInitialized = useAuthStore((state) => state.isInitialized)
 
   // Restore auth state after page refresh — if a valid session cookie exists
   // the proxy will forward it and the backend returns the current member.
   useEffect(() => {
-    const { member: current, setAuth } = useAuthStore.getState()
-    if (current) return
+    // Skip if already initialized
+    if (isInitialized) return
+
+    const { setAuth, markInitialized } = useAuthStore.getState()
 
     apolloClient
       .query<{ authenticatedMember: Member | null }>({
         query: GET_AUTHENTICATED_MEMBER,
+        fetchPolicy: 'network-only', // Always fetch from network, not cache
       })
       .then(({ data }) => {
         if (data?.authenticatedMember) {
           setAuth(data.authenticatedMember)
+        } else {
+          markInitialized()
         }
       })
       .catch((error) => {
         console.error('Failed to restore auth session:', error)
+        markInitialized()
       })
-  }, [])
+  }, [isInitialized])
 
   const login = async (email: string, password: string) => {
     const firebaseAuth = getFirebaseAuth()
@@ -57,15 +64,37 @@ export function useAuth() {
     }
 
     const idToken = await userCredential.user.getIdToken()
-    const memberData = await loginWithFirebase(idToken)
+
+    let memberData
+    try {
+      memberData = await loginWithFirebase(idToken)
+    } catch (error) {
+      // Backend session exchange failed — clean up the Firebase session
+      // to avoid a phantom signed-in state
+      await signOut(firebaseAuth).catch((e) => {
+        console.error('Firebase sign-out cleanup failed:', e)
+      })
+      throw error
+    }
+
     useAuthStore.getState().setAuth(memberData)
   }
 
   const logout = async () => {
-    await logoutAction()
-    useAuthStore.getState().clearAuth()
-    await signOut(getFirebaseAuth())
+    try {
+      // Clear server session cookie
+      await logoutAction()
+
+      // Sign out from Firebase
+      await signOut(getFirebaseAuth())
+    } catch (error) {
+      console.error('Logout failed:', error)
+    } finally {
+      // Always clear client state regardless of server/Firebase errors.
+      // clearAuth keeps isInitialized=true to avoid re-triggering session restoration.
+      useAuthStore.getState().clearAuth()
+    }
   }
 
-  return { member, isAuthenticated, login, logout }
+  return { member, isAuthenticated, isInitialized, login, logout }
 }
