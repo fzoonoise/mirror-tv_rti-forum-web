@@ -3,7 +3,7 @@
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { useEffect } from 'react'
 
-import { loginWithFirebase, logout as logoutAction } from '@/actions/auth'
+import { clearSessionCookie, loginWithFirebase } from '@/actions/auth'
 import { GET_AUTHENTICATED_MEMBER } from '@/graphql/queries/auth'
 import { apolloClient } from '@/lib/apollo'
 import { getFirebaseAuth } from '@/lib/firebase'
@@ -82,7 +82,7 @@ export function useAuth() {
   const logout = async () => {
     try {
       // Clear server session cookie
-      await logoutAction()
+      await clearSessionCookie()
 
       // Sign out from Firebase
       await signOut(getFirebaseAuth())

@@ -80,7 +80,7 @@ export async function loginWithFirebase(idToken: string): Promise<Member> {
   return member as Member
 }
 
-export async function logout(): Promise<void> {
+export async function clearSessionCookie(): Promise<void> {
   const cookieStore = await cookies()
   cookieStore.delete(SESSION_COOKIE_NAME)
 }

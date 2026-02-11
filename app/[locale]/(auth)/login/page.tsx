@@ -80,7 +80,11 @@ export default function LoginPage() {
       await login(data.email, data.password)
 
       const from = searchParams.get('from') || '/'
-      router.push(from)
+      // Validate redirect path to prevent Open Redirect attacks
+      // Only allow relative paths (starting with '/'), reject absolute URLs and protocol-relative URLs
+      // Example attacks: /login?from=https://evil.com or /login?from=//evil.com
+      const safePath = from.startsWith('/') && !from.startsWith('//') ? from : '/'
+      router.push(safePath)
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Login failed'
       setError(message)
