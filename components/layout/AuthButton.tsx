@@ -10,14 +10,14 @@ import { useAuth } from '@/hooks/useAuth'
 export function AuthButton() {
   const t = useTranslations('common')
   const locale = useLocale()
-  const { isAuthenticated, isInitialized, logout } = useAuth()
+  const { authStatus, logout } = useAuth()
 
   // Show skeleton during session restoration to avoid layout shift
-  if (!isInitialized) {
+  if (authStatus === 'restoring') {
     return <Skeleton className="h-8 w-12 rounded-md" />
   }
 
-  if (isAuthenticated) {
+  if (authStatus === 'authenticated') {
     return (
       <Button
         className="w-12"

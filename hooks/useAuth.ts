@@ -12,16 +12,15 @@ import type { Member } from '@/types/graphql'
 
 export function useAuth() {
   const member = useAuthStore((state) => state.member)
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
-  const isInitialized = useAuthStore((state) => state.isInitialized)
+  const authStatus = useAuthStore((state) => state.authStatus)
 
   // Restore auth state after page refresh — if a valid session cookie exists
   // the proxy will forward it and the backend returns the current member.
   useEffect(() => {
-    // Skip if already initialized
-    if (isInitialized) return
+    // Skip if session restore already completed
+    if (authStatus !== 'restoring') return
 
-    const { setAuth, markInitialized } = useAuthStore.getState()
+    const { setAuth, finishSessionRestore } = useAuthStore.getState()
 
     apolloClient
       .query<{ authenticatedMember: Member | null }>({
@@ -32,14 +31,14 @@ export function useAuth() {
         if (data?.authenticatedMember) {
           setAuth(data.authenticatedMember)
         } else {
-          markInitialized()
+          finishSessionRestore()
         }
       })
       .catch((error) => {
         console.error('Failed to restore auth session:', error)
-        markInitialized()
+        finishSessionRestore()
       })
-  }, [isInitialized])
+  }, [authStatus])
 
   const login = async (email: string, password: string) => {
     const firebaseAuth = getFirebaseAuth()
@@ -91,10 +90,10 @@ export function useAuth() {
       console.error('Logout failed:', error)
     } finally {
       // Always clear client state regardless of server/Firebase errors.
-      // clearAuth keeps isInitialized=true to avoid re-triggering session restoration.
+      // clearAuth sets authStatus='unauthenticated' to avoid re-triggering session restoration.
       useAuthStore.getState().clearAuth()
     }
   }
 
-  return { member, isAuthenticated, isInitialized, login, logout }
+  return { member, authStatus, login, logout }
 }

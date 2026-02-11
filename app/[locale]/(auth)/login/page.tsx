@@ -33,17 +33,17 @@ export default function LoginPage() {
   const tCommon = useTranslations('common')
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { login, isAuthenticated } = useAuth()
+  const { login, authStatus } = useAuth()
   const [error, setError] = useState<string | null>(null)
   const [showPassword, setShowPassword] = useState(false)
 
   // If session restoration discovers user is already logged in, redirect away
   useEffect(() => {
-    if (isAuthenticated) {
+    if (authStatus === 'authenticated') {
       const from = searchParams.get('from') || '/'
       router.push(from)
     }
-  }, [isAuthenticated, router, searchParams])
+  }, [authStatus, router, searchParams])
 
   const loginSchema = useMemo(
     () =>

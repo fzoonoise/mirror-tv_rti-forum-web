@@ -2,26 +2,26 @@ import { create } from 'zustand'
 
 import type { Member } from '@/types/graphql'
 
+export type AuthStatus = 'restoring' | 'authenticated' | 'unauthenticated'
+
 type AuthState = {
   member: Member | null
-  isAuthenticated: boolean
-  isInitialized: boolean
+  authStatus: AuthStatus
   setAuth: (member: Member) => void
   clearAuth: () => void
-  markInitialized: () => void
+  finishSessionRestore: () => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   member: null,
-  isAuthenticated: false,
-  isInitialized: false,
+  authStatus: 'restoring',
   setAuth: (member) => {
-    set({ member, isAuthenticated: true, isInitialized: true })
+    set({ member, authStatus: 'authenticated' })
   },
   clearAuth: () => {
-    set({ member: null, isAuthenticated: false, isInitialized: true })
+    set({ member: null, authStatus: 'unauthenticated' })
   },
-  markInitialized: () => {
-    set({ isInitialized: true })
+  finishSessionRestore: () => {
+    set({ authStatus: 'unauthenticated' })
   },
 }))
