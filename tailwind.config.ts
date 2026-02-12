@@ -10,6 +10,14 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: [
+          'var(--font-noto-sans-tc)',
+          'var(--font-noto-sans-thai)',
+          'system-ui',
+          'sans-serif',
+        ],
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
