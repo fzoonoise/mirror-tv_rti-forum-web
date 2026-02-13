@@ -9,7 +9,7 @@
     "save": "Simpan",
     "edit": "Edit",
     "delete": "Hapus",
-    "loading": "Memuat..."
+    "loading": "Memuat"
   },
   "nav": {
     "home": "Beranda",
@@ -33,7 +33,13 @@
     "email": "Email",
     "password": "Kata Sandi",
     "loginTitle": "Masuk",
+    "loginDescription": "Masukkan email dan kata sandi Anda untuk masuk",
     "registerTitle": "Daftar",
-    "forgotPassword": "Lupa Kata Sandi?"
+    "forgotPassword": "Lupa Kata Sandi?",
+    "validationEmail": "Alamat email tidak valid",
+    "validationPasswordMin": "Kata sandi minimal 8 karakter",
+    "validationPasswordUppercase": "Kata sandi harus mengandung minimal satu huruf besar",
+    "validationPasswordLowercase": "Kata sandi harus mengandung minimal satu huruf kecil",
+    "validationPasswordSpecial": "Kata sandi harus mengandung minimal satu karakter khusus"
   }
 }

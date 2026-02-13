@@ -9,7 +9,7 @@
     "save": "บันทึก",
     "edit": "แก้ไข",
     "delete": "ลบ",
-    "loading": "กำลังโหลด..."
+    "loading": "กำลังโหลด"
   },
   "nav": {
     "home": "หน้าแรก",
@@ -33,7 +33,13 @@
     "email": "อีเมล",
     "password": "รหัสผ่าน",
     "loginTitle": "เข้าสู่ระบบ",
+    "loginDescription": "กรอกอีเมลและรหัสผ่านของคุณเพื่อเข้าสู่ระบบ",
     "registerTitle": "ลงทะเบียน",
-    "forgotPassword": "ลืมรหัสผ่าน?"
+    "forgotPassword": "ลืมรหัสผ่าน?",
+    "validationEmail": "ที่อยู่อีเมลไม่ถูกต้อง",
+    "validationPasswordMin": "รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร",
+    "validationPasswordUppercase": "รหัสผ่านต้องมีตัวอักษรพิมพ์ใหญ่อย่างน้อยหนึ่งตัว",
+    "validationPasswordLowercase": "รหัสผ่านต้องมีตัวอักษรพิมพ์เล็กอย่างน้อยหนึ่งตัว",
+    "validationPasswordSpecial": "รหัสผ่านต้องมีตัวอักษรพิเศษอย่างน้อยหนึ่งตัว"
   }
 }

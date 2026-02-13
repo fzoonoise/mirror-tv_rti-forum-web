@@ -4,9 +4,9 @@
 export type Member = {
   id: string
   firebaseId: string
-  customId?: string
-  name?: string
-  nickname?: string
+  customId: string
+  name: string
+  nickname: string
   email?: string
 }
 
