@@ -17,7 +17,7 @@ export function getFirebaseApp(): FirebaseApp {
   if (!firebaseApp) {
     if (!FIREBASE_API_KEY || !FIREBASE_PROJECT_ID) {
       throw new Error(
-        'Firebase configuration is missing. Please set NEXT_PUBLIC_FIREBASE_* environment variables.',
+        'Firebase configuration is missing. Please set NEXT_PUBLIC_FIREBASE_* environment variables.'
       )
     }
 

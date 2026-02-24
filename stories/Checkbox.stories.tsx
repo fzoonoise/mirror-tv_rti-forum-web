@@ -86,7 +86,10 @@ export const ForumUseCases: Story = {
                 id="replies"
                 checked={notifications.replies}
                 onCheckedChange={(value) =>
-                  setNotifications({ ...notifications, replies: value === true })
+                  setNotifications({
+                    ...notifications,
+                    replies: value === true,
+                  })
                 }
               />
               <Label htmlFor="replies">有人回覆我的文章</Label>
@@ -96,7 +99,10 @@ export const ForumUseCases: Story = {
                 id="mentions"
                 checked={notifications.mentions}
                 onCheckedChange={(value) =>
-                  setNotifications({ ...notifications, mentions: value === true })
+                  setNotifications({
+                    ...notifications,
+                    mentions: value === true,
+                  })
                 }
               />
               <Label htmlFor="mentions">有人提及我</Label>

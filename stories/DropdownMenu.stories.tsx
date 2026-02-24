@@ -79,7 +79,7 @@ export const UserMenu: Story = {
       <DropdownMenuContent className="w-56" align="end">
         <DropdownMenuLabel>
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">張三</p>
+            <p className="text-sm leading-none font-medium">張三</p>
             <p className="text-xs leading-none text-muted-foreground">
               zhang@example.com
             </p>

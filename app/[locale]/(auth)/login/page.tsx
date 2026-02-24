@@ -54,12 +54,9 @@ export default function LoginPage() {
           .min(8, t('validationPasswordMin'))
           .regex(/[A-Z]/, t('validationPasswordUppercase'))
           .regex(/[a-z]/, t('validationPasswordLowercase'))
-          .regex(
-            /[!@#$%^&*(),.?":{}|<>]/,
-            t('validationPasswordSpecial'),
-          ),
+          .regex(/[!@#$%^&*(),.?":{}|<>]/, t('validationPasswordSpecial')),
       }),
-    [t],
+    [t]
   )
 
   type LoginForm = z.infer<typeof loginSchema>
@@ -83,7 +80,8 @@ export default function LoginPage() {
       // Validate redirect path to prevent Open Redirect attacks
       // Only allow relative paths (starting with '/'), reject absolute URLs and protocol-relative URLs
       // Example attacks: /login?from=https://evil.com or /login?from=//evil.com
-      const safePath = from.startsWith('/') && !from.startsWith('//') ? from : '/'
+      const safePath =
+        from.startsWith('/') && !from.startsWith('//') ? from : '/'
       router.push(safePath)
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Login failed'
@@ -116,7 +114,7 @@ export default function LoginPage() {
                           {...field}
                         />
                       </FormControl>
-                      <Mail className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                      <Mail className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-muted-foreground" />
                     </div>
                     <FormMessage />
                   </FormItem>
@@ -140,7 +138,7 @@ export default function LoginPage() {
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                        className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                         aria-label={
                           showPassword ? 'Hide password' : 'Show password'
                         }
@@ -163,11 +161,7 @@ export default function LoginPage() {
                 </div>
               )}
 
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={isSubmitting}
-              >
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? tCommon('loading') : tCommon('login')}
                 {isSubmitting && <Spinner className="mr-2 size-4" />}
               </Button>
