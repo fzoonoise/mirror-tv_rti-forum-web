@@ -1,9 +1,9 @@
 import '../globals.css'
 
+import { Noto_Sans_TC, Noto_Sans_Thai } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
-import { Noto_Sans_TC, Noto_Sans_Thai } from 'next/font/google'
 
 import { AuthButton } from '@/components/layout/AuthButton'
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
