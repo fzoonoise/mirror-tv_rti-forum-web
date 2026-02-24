@@ -30,7 +30,7 @@ export function LanguageSwitcher() {
     // Remove current locale prefix anchored to the start of the pathname
     const pathnameWithoutLocale = pathname.replace(
       new RegExp(`^/${currentLocale}`),
-      '',
+      ''
     )
     // Construct new path with new locale
     const newPath = `/${newLocale}${pathnameWithoutLocale}`

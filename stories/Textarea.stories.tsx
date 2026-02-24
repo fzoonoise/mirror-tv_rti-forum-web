@@ -50,7 +50,9 @@ export const ForumUseCases: Story = {
           className="min-h-[120px]"
         />
         <div className="flex items-center justify-between">
-          <span className="text-xs text-muted-foreground">支援 Markdown 語法</span>
+          <span className="text-xs text-muted-foreground">
+            支援 Markdown 語法
+          </span>
           <Button>發布文章</Button>
         </div>
       </div>

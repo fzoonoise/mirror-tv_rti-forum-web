@@ -1,9 +1,9 @@
 import '../globals.css'
 
+import { Noto_Sans_TC, Noto_Sans_Thai } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
-import { Noto_Sans_TC, Noto_Sans_Thai } from 'next/font/google'
 
 import { AuthButton } from '@/components/layout/AuthButton'
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
@@ -12,7 +12,7 @@ import type { Locale } from '@/i18n'
 import { locales } from '@/i18n'
 
 const notoSansTC = Noto_Sans_TC({
-  subsets: ['latin', 'chinese-traditional'],
+  subsets: ['latin'],
   weight: ['400', '500', '700'],
   display: 'swap',
   variable: '--font-noto-sans-tc',
@@ -46,7 +46,10 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} className={`${notoSansTC.variable} ${notoSansThai.variable}`}>
+    <html
+      lang={locale}
+      className={`${notoSansTC.variable} ${notoSansThai.variable}`}
+    >
       <body className="font-sans">
         <NextIntlClientProvider messages={messages}>
           <header className="border-b">

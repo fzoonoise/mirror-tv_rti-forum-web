@@ -1,6 +1,7 @@
 # React Hook Form 完整教學指南
 
 ## 目錄
+
 1. [基礎概念](#基礎概念)
 2. [安裝與設定](#安裝與設定)
 3. [基本用法](#基本用法)
@@ -103,6 +104,7 @@ function MyForm() {
 ```
 
 **重點**：
+
 - `{...field}` 會自動綁定 `value`, `onChange`, `onBlur`, `ref`
 - `FormMessage` 會自動顯示驗證錯誤訊息
 
@@ -152,6 +154,7 @@ function MyForm() {
 ```
 
 **重點**：
+
 - Select 需要手動綁定 `onValueChange` 和 `defaultValue`
 - 不能直接用 `{...field}`
 
@@ -178,6 +181,7 @@ function MyForm() {
 ```
 
 **重點**：
+
 - 需要將 `e.target.value` 轉換成數字
 - Zod schema 使用 `z.coerce.number()` 或手動轉換
 
@@ -199,6 +203,7 @@ const allValues = form.watch()
 ```
 
 **使用場景**：
+
 - 即時預覽
 - 根據某欄位值顯示/隱藏其他欄位
 - 計算總和
@@ -215,9 +220,9 @@ form.setValue('password', 'newpassword')
 
 // 選項
 form.setValue('email', 'new@email.com', {
-  shouldValidate: true,  // 觸發驗證
-  shouldDirty: true,     // 標記為已修改
-  shouldTouch: true,     // 標記為已觸碰
+  shouldValidate: true, // 觸發驗證
+  shouldDirty: true, // 標記為已修改
+  shouldTouch: true, // 標記為已觸碰
 })
 ```
 
@@ -236,7 +241,7 @@ form.reset({
 // 部分重置
 form.reset({
   email: form.getValues('email'), // 保留 email
-  password: '',                   // 清空 password
+  password: '', // 清空 password
 })
 ```
 
@@ -285,32 +290,33 @@ const { fields, append, remove, move } = useFieldArray({
 ### 1. 條件式驗證
 
 ```typescript
-const schema = z.object({
-  hasAddress: z.boolean(),
-  address: z.string().optional(),
-}).refine(
-  (data) => {
-    // 如果勾選 hasAddress，address 必填
-    if (data.hasAddress && !data.address) {
-      return false
+const schema = z
+  .object({
+    hasAddress: z.boolean(),
+    address: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      // 如果勾選 hasAddress，address 必填
+      if (data.hasAddress && !data.address) {
+        return false
+      }
+      return true
+    },
+    {
+      message: '請填寫地址',
+      path: ['address'],
     }
-    return true
-  },
-  {
-    message: '請填寫地址',
-    path: ['address'],
-  }
-)
+  )
 ```
 
 ### 2. 自訂驗證錯誤訊息
 
 ```typescript
 const schema = z.object({
-  email: z.string()
-    .min(1, '請輸入 Email')
-    .email('Email 格式錯誤'),
-  password: z.string()
+  email: z.string().min(1, '請輸入 Email').email('Email 格式錯誤'),
+  password: z
+    .string()
     .min(6, '密碼至少 6 個字元')
     .regex(/[A-Z]/, '密碼必須包含大寫字母')
     .regex(/[0-9]/, '密碼必須包含數字'),
@@ -321,7 +327,8 @@ const schema = z.object({
 
 ```typescript
 const schema = z.object({
-  username: z.string()
+  username: z
+    .string()
     .min(3)
     .refine(
       async (username) => {
@@ -470,14 +477,14 @@ app.post('/api/submit', async (req, res) => {
 const form = useForm({
   defaultValues: {
     password: 'secret123', // 不要這樣做
-  }
+  },
 })
 
 // ✅ 正確
 const form = useForm({
   defaultValues: {
     password: '', // 永遠為空
-  }
+  },
 })
 ```
 
@@ -585,6 +592,7 @@ const onSubmit = async (data: FormData) => {
 4. ✅ 手動控制表單狀態
 
 在 Storybook 中查看實際效果：
+
 ```bash
 pnpm storybook
 ```

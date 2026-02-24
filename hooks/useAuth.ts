@@ -48,7 +48,7 @@ export function useAuth() {
       userCredential = await signInWithEmailAndPassword(
         firebaseAuth,
         email,
-        password,
+        password
       )
     } catch (error) {
       const code = (error as { code?: string }).code

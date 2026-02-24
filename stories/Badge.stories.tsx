@@ -81,20 +81,16 @@ export const NotificationCount: Story = {
   render: () => (
     <div className="flex items-center gap-4">
       <div className="relative inline-block">
-        <button className="rounded-lg bg-secondary px-4 py-2">
-          通知
-        </button>
-        <Badge className="absolute -right-2 -top-2 h-5 w-5 items-center justify-center rounded-full p-0">
+        <button className="rounded-lg bg-secondary px-4 py-2">通知</button>
+        <Badge className="absolute -top-2 -right-2 h-5 w-5 items-center justify-center rounded-full p-0">
           3
         </Badge>
       </div>
       <div className="relative inline-block">
-        <button className="rounded-lg bg-secondary px-4 py-2">
-          訊息
-        </button>
+        <button className="rounded-lg bg-secondary px-4 py-2">訊息</button>
         <Badge
           variant="destructive"
-          className="absolute -right-2 -top-2 h-5 w-5 items-center justify-center rounded-full p-0"
+          className="absolute -top-2 -right-2 h-5 w-5 items-center justify-center rounded-full p-0"
         >
           9
         </Badge>

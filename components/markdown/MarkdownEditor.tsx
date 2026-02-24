@@ -86,11 +86,7 @@ export function MarkdownViewer({
   ...props
 }: MarkdownViewerProps) {
   return (
-    <div
-      data-color-mode="light"
-      className={className}
-      {...props}
-    >
+    <div data-color-mode="light" className={className} {...props}>
       <MDEditor.Markdown source={content} />
     </div>
   )

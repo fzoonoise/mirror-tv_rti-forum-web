@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Loader, LoaderCircle, RefreshCw } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
@@ -13,25 +12,13 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Different spinner types
-export const SpinnerTypes: Story = {
+// Default spinner
+export const Default: Story = {
   render: () => (
     <div className="flex items-center gap-8">
       <div className="text-center">
         <Spinner className="size-8" />
         <p className="mt-2 text-xs text-muted-foreground">Default (Loader2)</p>
-      </div>
-      <div className="text-center">
-        <Spinner icon={Loader} className="size-8" />
-        <p className="mt-2 text-xs text-muted-foreground">Loader</p>
-      </div>
-      <div className="text-center">
-        <Spinner icon={LoaderCircle} className="size-8" />
-        <p className="mt-2 text-xs text-muted-foreground">LoaderCircle</p>
-      </div>
-      <div className="text-center">
-        <Spinner icon={RefreshCw} className="size-8" />
-        <p className="mt-2 text-xs text-muted-foreground">RefreshCw</p>
       </div>
     </div>
   ),
@@ -70,12 +57,12 @@ export const ButtonLoading: Story = {
         載入中
       </Button>
       <Button variant="secondary" disabled>
-        <Spinner icon={RefreshCw} className="mr-2" />
-        重新整理
+        <Spinner className="mr-2" />
+        處理中
       </Button>
       <Button variant="outline" disabled>
-        <Spinner icon={LoaderCircle} className="mr-2" />
-        處理中
+        <Spinner className="mr-2" />
+        請稍候
       </Button>
     </div>
   ),

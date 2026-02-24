@@ -15,6 +15,7 @@ This will start Storybook on `http://localhost:6006`
 The following component categories are available for preview:
 
 ### Core Components
+
 - **Avatar**: User profile images with fallbacks.
 - **Badge**: Status indicators and labels.
 - **Button**: Primary, secondary, ghost, and destructive variants.
@@ -23,6 +24,7 @@ The following component categories are available for preview:
 - **Spinner**: Loading indicators.
 
 ### Form Elements
+
 - **Checkbox**: Single selection elements.
 - **Form**: Integrated examples using `react-hook-form` and `zod`.
 - **Input**: Standard text input fields.
@@ -32,6 +34,7 @@ The following component categories are available for preview:
 - **Textarea**: Multi-line text input areas.
 
 ### Overlays & Feedback
+
 - **Dialog**: Modals, confirmation prompts, and alerts.
 - **DropdownMenu**: Contextual menu actions.
 - **Sonner**: Modern toast notifications.
@@ -45,6 +48,7 @@ The following component categories are available for preview:
 4. Run `pnpm storybook` to see your story.
 
 ## Resources
+
 - [Storybook Documentation](https://storybook.js.org/docs)
 - [shadcn/ui Components](https://ui.shadcn.com)
 - [lucide-react Icons](https://lucide.dev/icons)

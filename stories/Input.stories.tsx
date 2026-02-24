@@ -100,7 +100,7 @@ export const Disabled: Story = {
 export const SearchInput: Story = {
   render: () => (
     <div className="relative w-full max-w-sm">
-      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+      <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       <Input type="search" placeholder="搜尋文章、用戶..." className="pl-10" />
     </div>
   ),
@@ -110,7 +110,7 @@ export const SearchInput: Story = {
 export const WithPrefixIcon: Story = {
   render: () => (
     <div className="relative w-full max-w-sm">
-      <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+      <Mail className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       <Input type="email" placeholder="email@example.com" className="pl-10" />
     </div>
   ),
@@ -131,7 +131,7 @@ export const PasswordToggle: Story = {
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+          className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
         >
           {showPassword ? (
             <EyeOff className="h-4 w-4" />
